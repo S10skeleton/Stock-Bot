@@ -1,0 +1,6 @@
+flask
+requests
+yfinance
+pandas
+sqlalchemy
+nltk  # or anything for sentiment analysis
