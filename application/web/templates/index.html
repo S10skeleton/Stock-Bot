@@ -2,35 +2,34 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Stock AI Dashboard</title>
+  <title>Stock Bot Dashboard</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <h1>Stock AI Dashboard</h1>
-  
-  <!-- Portfolio Section -->
+  <h1>Stock Bot Dashboard</h1>
+
   <section>
-    <h2>Portfolio</h2>
-    <table id="portfolioTable">
+    <h2>Market Data from DB</h2>
+    <table id="marketDataTable">
       <thead>
         <tr>
           <th>Symbol</th>
-          <th>Shares</th>
-          <th>Average Price</th>
+          <th>Date</th>
+          <th>Open</th>
+          <th>High</th>
+          <th>Low</th>
+          <th>Close</th>
+          <th>Volume</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Rows to be populated by JS -->
+        <!-- Filled by JS -->
       </tbody>
     </table>
   </section>
 
-  <!-- Performance Section -->
-  <section>
-    <h2>Performance</h2>
-    <div id="performance"></div>
-  </section>
-
+  <!-- Link your custom script after the HTML -->
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 </body>
 </html>

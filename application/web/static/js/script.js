@@ -1,40 +1,37 @@
-// script.js
-// Handles fetching data from Flask endpoints and updating the DOM.
-
 document.addEventListener('DOMContentLoaded', () => {
-    fetchPortfolio();
-    fetchPerformance();
+    fetchMarketData();
   });
   
-  function fetchPortfolio() {
-    fetch('/api/portfolio')
+  function fetchMarketData() {
+    // Calls the Flask API endpoint
+    fetch('/api/market-data')
       .then(response => response.json())
       .then(data => {
-        const tableBody = document.querySelector('#portfolioTable tbody');
-        tableBody.innerHTML = ''; // Clear existing rows if any
-        data.forEach(item => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${item.symbol}</td>
-            <td>${item.shares}</td>
-            <td>${item.avg_price}</td>
-          `;
-          tableBody.appendChild(row);
-        });
+        // data is an array of objects
+        // e.g., [{ symbol: 'AAPL', date: '2025-01-08 09:31:00', open: 150.25, ... }, ...]
+        renderMarketDataTable(data);
       })
-      .catch(err => console.error('Error fetching portfolio:', err));
+      .catch(error => console.error('Error fetching market data:', error));
   }
   
-  function fetchPerformance() {
-    fetch('/api/performance')
-      .then(response => response.json())
-      .then(data => {
-        const perfDiv = document.getElementById('performance');
-        perfDiv.innerHTML = `
-          <p>Total Value: $${data.totalValue}</p>
-          <p>Unrealized PnL: $${data.unrealizedPnL}</p>
-        `;
-      })
-      .catch(err => console.error('Error fetching performance:', err));
+  function renderMarketDataTable(data) {
+    const tableBody = document.querySelector('#marketDataTable tbody');
+    // Clear existing rows
+    tableBody.innerHTML = '';
+  
+    // Create a row for each entry
+    data.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.symbol}</td>
+        <td>${item.date}</td>
+        <td>${item.open.toFixed(2)}</td>
+        <td>${item.high.toFixed(2)}</td>
+        <td>${item.low.toFixed(2)}</td>
+        <td>${item.close.toFixed(2)}</td>
+        <td>${item.volume}</td>
+      `;
+      tableBody.appendChild(row);
+    });
   }
   
