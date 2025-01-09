@@ -11,7 +11,7 @@ TICKERS_CSV = os.path.join(BASE_DIR, '..', 'tickers.csv')
 
 DATABASE_PATH = os.path.join(BASE_DIR, '..', 'data', 'historical_data.db')
 
-def update_stock_data(symbol='AAPL'):
+def update_stock_data(symbol):
     """Fetch and insert data for a single symbol into market_data table."""
     ticker = yf.Ticker(symbol)
     # For a daily granularity, you could do period='1y', interval='1d' 
@@ -30,7 +30,8 @@ def update_stock_data(symbol='AAPL'):
             high REAL,
             low REAL,
             close REAL,
-            volume INTEGER
+            volume INTEGER,
+            UNIQUE(symbol, date)
         )
     """)
 
@@ -40,7 +41,7 @@ def update_stock_data(symbol='AAPL'):
         volume_val = int(row['Volume']) if not pd.isna(row['Volume']) else 0
 
         cursor.execute("""
-            INSERT INTO market_data (symbol, date, open, high, low, close, volume)
+            INSERT OR IGNORE INTO market_data (symbol, date, open, high, low, close, volume)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (
             symbol,

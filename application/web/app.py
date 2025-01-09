@@ -15,25 +15,35 @@ def index():
     """ Render the main HTML page. """
     return render_template('index.html')  # This looks in /templates by default
 
-# 2) Provide an API endpoint for market data
-@app.route('/api/market-data')
-def get_market_data():
-    """ Return some rows from the market_data table as JSON. """
-    # Connect to the DB
+@app.route('/api/symbols')
+def get_symbols():
     conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
-
-    # Query up to the first 10 rows for demo (or whatever you like)
-    cursor.execute("""
-        SELECT symbol, date, open, high, low, close, volume
-        FROM market_data
-        ORDER BY date ASC
-        LIMIT 10
-    """)
+    cursor.execute("SELECT DISTINCT symbol FROM market_data ORDER BY symbol ASC;")
     rows = cursor.fetchall()
     conn.close()
 
-    # Convert to a list of dicts for easy JSON serialization
+    # rows might look like: [('AAPL',), ('MSFT',), ('TSLA',)]
+    symbols = [row[0] for row in rows]
+    return jsonify(symbols)
+
+
+@app.route('/api/market-data/<symbol>')
+def get_market_data(symbol):
+    conn = sqlite3.connect(DATABASE_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT symbol, date, open, high, low, close, volume
+        FROM market_data
+        WHERE symbol = ?
+        ORDER BY date ASC
+        LIMIT 50
+    """, (symbol,))
+    rows = cursor.fetchall()
+    conn.close()
+
+    # Convert to a list of dicts
     data_list = [
         {
             "symbol": row[0],
@@ -46,9 +56,11 @@ def get_market_data():
         }
         for row in rows
     ]
-
     return jsonify(data_list)
+
 
 if __name__ == '__main__':
     # For local dev, enable debug mode
     app.run(debug=True)
+
+    

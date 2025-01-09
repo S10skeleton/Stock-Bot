@@ -1,25 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetchMarketData();
+    // 1) Get the list of symbols for the dropdown
+    fetch('/api/symbols')
+      .then(response => response.json())
+      .then(symbols => {
+        populateDropdown(symbols);
+      })
+      .catch(err => console.error('Error fetching symbols:', err));
+  
+    // 2) Attach event to the "Load Data" button
+    const loadDataBtn = document.getElementById('loadDataBtn');
+    loadDataBtn.addEventListener('click', () => {
+      const dropdown = document.getElementById('symbolDropdown');
+      const selectedSymbol = dropdown.value;
+      fetchMarketData(selectedSymbol);
+    });
   });
   
-  function fetchMarketData() {
-    // Calls the Flask API endpoint
-    fetch('/api/market-data')
+  function populateDropdown(symbols) {
+    const dropdown = document.getElementById('symbolDropdown');
+    dropdown.innerHTML = ''; // Clear any existing options
+  
+    symbols.forEach(symbol => {
+      const option = document.createElement('option');
+      option.value = symbol;
+      option.text = symbol;
+      dropdown.appendChild(option);
+    });
+  }
+  
+  function fetchMarketData(symbol) {
+    // calls /api/market-data/SYMBOL
+    fetch(`/api/market-data/${symbol}`)
       .then(response => response.json())
       .then(data => {
-        // data is an array of objects
-        // e.g., [{ symbol: 'AAPL', date: '2025-01-08 09:31:00', open: 150.25, ... }, ...]
         renderMarketDataTable(data);
       })
-      .catch(error => console.error('Error fetching market data:', error));
+      .catch(err => console.error('Error fetching market data:', err));
   }
   
   function renderMarketDataTable(data) {
     const tableBody = document.querySelector('#marketDataTable tbody');
-    // Clear existing rows
-    tableBody.innerHTML = '';
+    tableBody.innerHTML = ''; // Clear existing rows
   
-    // Create a row for each entry
     data.forEach(item => {
       const row = document.createElement('tr');
       row.innerHTML = `
