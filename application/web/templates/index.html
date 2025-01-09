@@ -8,34 +8,44 @@
 <body>
   <h1>Stock Bot Dashboard</h1>
 
+  <!-- Symbol Dropdown & Load Button -->
   <section>
     <h2>Select a Symbol</h2>
     <select id="symbolDropdown">
-      <!-- Populated by JS with the distinct symbols -->
+      <!-- Populated by JS -->
     </select>
     <button id="loadDataBtn">Load Data</button>
   </section>
 
+  <!-- Table of Market Data + Indicators -->
   <section>
-    <h2>Market Data</h2>
+    <h2>Market Data & Indicators</h2>
     <table id="marketDataTable">
       <thead>
         <tr>
-          <th>Symbol</th>
           <th>Date</th>
           <th>Open</th>
           <th>High</th>
           <th>Low</th>
           <th>Close</th>
           <th>Volume</th>
+          <th>MA_50</th>
+          <th>MA_200</th>
+          <th>RSI_14</th>
+          <th>MACD</th>
+          <th>MACD Signal</th>
+          <th>BB Upper</th>
+          <th>BB Mid</th>
+          <th>BB Lower</th>
         </tr>
       </thead>
       <tbody>
-        <!-- JS will append rows here -->
+        <!-- Filled by JS -->
       </tbody>
     </table>
   </section>
 
+  <!-- Link to our JS -->
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
