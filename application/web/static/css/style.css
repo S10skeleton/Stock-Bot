@@ -2,6 +2,8 @@ body {
   font-family: Arial, sans-serif;
   margin: 20px;
   padding: 0;
+  background-color: rgb(56, 56, 56);
+  color: #ddd;
 }
 
 table {
@@ -11,16 +13,19 @@ table {
 }
 
 th, td {
-  border: 1px solid #ddd;
+  border: 1px solid #000000;
   padding: 8px;
   text-align: right; /* numeric columns aligned right */
+  color: #ddd;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: #1f1f1f;
   text-align: center;
+  color: #ddd;
 }
 
 tr:hover {
-  background-color: #f9f9f9;
+  background-color: #423b8a;
+  color: #ddd;
 }

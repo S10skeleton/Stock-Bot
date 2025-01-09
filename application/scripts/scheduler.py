@@ -9,10 +9,10 @@ def job():
     print("Data fetch complete.")
 
 # Schedule the job every 30 minutes
-schedule.every(10).minutes.do(job)
+schedule.every(60).minutes.do(job)
 
 if __name__ == "__main__":
-    print("Scheduler started. Will update every 10 minutes.")
+    print("Scheduler started. Will update every 60 minutes.")
     # Run the scheduler indefinitely
     while True:
         schedule.run_pending()
