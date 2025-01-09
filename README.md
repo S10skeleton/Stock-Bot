@@ -10,6 +10,8 @@ A local, self-contained stock trading AI bot that:
 - *(Planned)* Performs Sentiment Analysis from multiple sources (Twitter/X, Reddit, StockTwits, Finnhub, etc.) to gauge market sentiment.
 - *(Planned)* Trains/Uses an AI Model to generate buy/sell signals or forecasts, integrating technical + sentiment data.
 
+![StockPage](application/web/assets/Screenshot.png)
+
 ## Table of Contents
 
 - [Project Structure](#project-structure)
