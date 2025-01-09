@@ -6,7 +6,7 @@ The **Stock Bot Dashboard** is a comprehensive tool designed to help users analy
 
 ---
 ### Dashboard View
-![Screenshot](application/web/assets/screenshot.png)
+![Screenshot](application/web/assets/Screenshot.png)
 
 ---
 
